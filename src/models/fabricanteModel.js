@@ -3,7 +3,8 @@ const { Schema, default: mongoose } = require('mongoose')
 const fabricanteSchema = new Schema({
     nombre:{
         type: Schema.Types.String,
-        required:true
+        required:true,
+        unique: true
     },
     direccion:{
         type:Schema.Types.String,
