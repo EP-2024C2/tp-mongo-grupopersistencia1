@@ -3,7 +3,7 @@ const seedProductos = require('./productoSeeds')
 const seedComponentes = require('./componenteSeeds')
 const seedFabricantes = require('./fabricanteSeeds')
 
-const seedDatabase = async()=>{
+const cleanAndSeed = async()=>{
     try{
         await producto.deleteMany({})
         await fabricante.deleteMany({})
@@ -18,4 +18,4 @@ const seedDatabase = async()=>{
     }
 }
 
-module.exports = seedDatabase
+module.exports = cleanAndSeed

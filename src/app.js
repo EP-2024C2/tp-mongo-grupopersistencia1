@@ -1,6 +1,6 @@
 const express = require('express')
 const {connectToDatabase} = require('./config/mongoDb')
-const seedDatabase = require('./seeds')
+const cleanAndSeed = require('./seeds')
 const router = require('./routes')
 const PORT = process.env.PORT || 3000
 
@@ -11,6 +11,6 @@ app.use(router)
 
 app.listen(PORT,async()=>{
     await connectToDatabase()
-    await seedDatabase()
+    await cleanAndSeed()
     console.log(`Server running on port ${PORT}`)
 })

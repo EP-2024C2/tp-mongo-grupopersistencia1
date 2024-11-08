@@ -38,11 +38,25 @@ const crearProducto = async (req, res) => {
 }
 
 
+const modificarProducto = async (req,res) => {
+    const id = req.params.id
+    try {
+        const productoActualizado = await producto.findOneAndUpdate({_id:id},req.body,{new:true})
+
+        if(!productoActualizado){return res.status(404).json({message:`Producto no encontrado`})}
+        return res.status(200).json({message:`Se actualizo el producto ${productoActualizado.nombre}. ${productoActualizado}`})
+
+    } catch (error) {
+        console.log(`Error al modificar producto:${error.message}`)
+        return res.status(500).json({message: `Error al modificar producto:${error.message}`})
+    }
+}
 
 
 module.exports = {
     getProductos,
     getProductosById,
-    crearProducto
+    crearProducto,
+    modificarProducto
 }
 
