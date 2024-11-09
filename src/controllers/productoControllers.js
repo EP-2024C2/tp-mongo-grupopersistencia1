@@ -52,11 +52,30 @@ const modificarProducto = async (req,res) => {
     }
 }
 
+const borrarProducto = async(req,res) =>{  ///Corregir
+    const id = req.params.id
+    try {
+        const productoEliminado = await producto.findOneAndDelete({_id:id})
+        if(!productoEliminado){return res.status(404).json({message:'No se encontró el producto'})}
+
+        /*
+        if(componentes.len > 0 || fabricantes.len > 0){ 
+            return res.status(500).json({message:`No se pudo eliminar "${productoEliminado.nombre} porque tiene componentes/fabricantes asociados". ${error.message}` }) 
+        }
+        algo así deberia quedar
+        */
+        return res.status(200).json({message:`Producto "${productoEliminado.nombre}" eliminado`})
+
+    } catch (error) {
+        return res.status(500).json({message:`No se pudo eliminar "${productoEliminado.nombre}". ${error.message}` })
+    }
+}
 
 module.exports = {
     getProductos,
     getProductosById,
     crearProducto,
-    modificarProducto
+    modificarProducto,
+    borrarProducto
 }
 
