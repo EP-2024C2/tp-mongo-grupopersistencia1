@@ -3,8 +3,12 @@
 
 ## Instrucciones para correr la app:
 Posicionarse en el directorio donde se encuentra la aplicacion y ejecutar los siguientes comandos:
-1. 'docker build -t 'nombre_imagen .' | Crea una imagen de la aplicación.
+1. 'docker build -t <nombre_imagen> .' | Crea una imagen de la aplicación.
 2. 'docker compose up -d' | Ejecuta la aplicación y la base de datos desde el archivo 'docker-compose.yml'.
+   
+**Importante:** 
+- Solo hay que crear la imágen de la app si es que esta no está creada. Es decir que el comando 1. solo debe ejecutarse una vez.
+- En caso de que se realicen cambios en el código, la imagen debera eliminarse con 'docker rmi <nombre_imagen>' y luego volver a crearse con el comando 1.
 
 
 ## Endpoints:
