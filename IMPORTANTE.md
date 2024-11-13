@@ -17,3 +17,15 @@ tp_persistencia:
 
 
 ///
+
+*para ejecutar (sin docker):
+1. docker compose up -d | inicia la bd
+2. npm run dev | inicia la app 
+
+
+*para ejecutar (con docker):
+1. docker build -t 'nombre_imagen . | crear imagen de la app (node) : #NO usar si la imagen ya está creada
+2. docker compose up -d | ejecuta todo (bd y app)
+
+
+///
