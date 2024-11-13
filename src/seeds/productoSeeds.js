@@ -1,7 +1,7 @@
-const {producto} = require('../models')
+const {Producto} = require('../models')
 
 const seedProductos = async()=>{
-    await producto.insertMany([
+    await Producto.insertMany([
         {
             nombre:'PC',
             descripcion:'Pc gamer con lucesitas',

@@ -1,13 +1,13 @@
-const {producto,fabricante,componente} = require('../models')
+const {Producto,Fabricante,Componente} = require('../models')
 const seedProductos = require('./productoSeeds')
 const seedComponentes = require('./componenteSeeds')
 const seedFabricantes = require('./fabricanteSeeds')
 
 const cleanAndSeed = async()=>{
     try{
-        await producto.deleteMany({})
-        await fabricante.deleteMany({})
-        await componente.deleteMany({})
+        await Producto.deleteMany({})
+        await Fabricante.deleteMany({})
+        await Componente.deleteMany({})
         await seedProductos()
         await seedComponentes()
         await seedFabricantes()

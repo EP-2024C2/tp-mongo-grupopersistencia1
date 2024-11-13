@@ -19,9 +19,9 @@ route.delete('/:id', validarId(producto), controllerProductos.borrarProducto) //
 //CORREGIR QUE NO SE PUEDA ELIMINAR SI ESTÁ ASOCIADO
 //Lo mismo con los fabricantes y componentes 
 
+route.post('/:id/fabricantes', controllerProductos.asociarProductoConFabricante) //asociar producto con fabricante
 
 /*
-route.post('/:id/fabricantes', controllerProductos.asociarProductoConFabricante) //asociar producto con fabricante
 
 route.get('/:id/fabricantes', controllerProductos.getFabricantesByProducto) //Obtener todos los fabricantes de un producto
 

@@ -1,9 +1,10 @@
-const componente = require('./componenteModel')
-const fabricante = require('./fabricanteModel')
-const producto = require('./productoModel')
+const Componente = require('./componenteModel')
+const Fabricante = require('./fabricanteModel')
+const Producto = require('./productoModel')
+
 
 module.exports = {
-    componente,
-    fabricante,
-    producto
+    Componente,
+    Fabricante,
+    Producto
 }

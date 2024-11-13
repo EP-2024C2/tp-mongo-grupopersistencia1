@@ -1,7 +1,7 @@
-const {componente} = require('../models')
+const {Componente} = require('../models')
 
 const seedComponentes = async()=>{
-    await componente.insertMany([
+    await Componente.insertMany([
         {
             nombre:'Procesador',
             descripcion:'i3 9100f'

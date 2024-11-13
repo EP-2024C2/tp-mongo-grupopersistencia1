@@ -1,7 +1,7 @@
-const {fabricante} = require('../models')
+const {Fabricante} = require('../models')
 
 const seedFabricantes = async()=>{
-    await fabricante.insertMany([
+    await Fabricante.insertMany([
         {
             nombre:'LG',
             direccion:'pedro diaz 123',
