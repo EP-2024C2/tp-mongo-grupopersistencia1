@@ -8,6 +8,7 @@ const route = Router()
 /*
 route.get('/',controllerFabricantes.getFabricantes)
 
+
 route.get('/:id',controllerFabricantes.getFabricantesById)
 
 route.post('/',validador(fabricanteSchema,false),controllerFabricantes.crearFabricante) //false no hace falta porque está por default, lo dejo a modo de ejemplo

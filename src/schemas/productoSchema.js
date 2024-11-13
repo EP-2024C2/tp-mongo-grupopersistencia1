@@ -6,8 +6,6 @@ const Joi = require('joi')
 //Se usa productoSchema cuando se crea un producto y productoSchemaUpdate cuando se actualiza
 
 
-
-
 const productoSchema = Joi.object().keys({
     nombre: Joi.string().required().max(20).messages({
         "string.max": `'nombre' debe tener como máximo {#limit} caracteres`,
