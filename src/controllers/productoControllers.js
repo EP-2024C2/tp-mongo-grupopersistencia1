@@ -78,7 +78,7 @@ const asociarProductoConFabricante = async(req,res)=>{
     try {
         
         if(!mongoose.Types.ObjectId.isValid(idFabricante)){
-            return res.status(400).json({message:`${idFabricante} no es un objectId`})
+            return res.status(400).json({message:`${idFabricante} no es un objectId`})//revisar, esto deberia hacerlo el middleware
         }
         const fabricante = await Fabricante.findById(idFabricante)
         if(!fabricante){return res.status(404).json({message:'Fabricante no encontrado'})}
