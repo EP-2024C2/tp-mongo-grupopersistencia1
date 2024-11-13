@@ -1,114 +1,13 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/QBnwEJ5z)
-# Estrategias de Persistencia - TP 2024 - Documental
+# Estrategias de Persistencia - TP 2 2024 - Documental
 
-Este trabajo práctico tiene como objetivo principal que los alumnos adquieran experiencia práctica en la implementación de las relaciones entre documentos en contexto de una API REST utilizando un ODM (Object-document mapping).
+## Instrucciones para correr la app:
+Posicionarse en el directorio donde se encuentra la aplicacion y ejecutar los siguientes comandos:
+1. 'docker build -t 'nombre_imagen .' | Crea una imagen de la aplicación.
+2. 'docker compose up -d' | Ejecuta la aplicación y la base de datos desde el archivo 'docker-compose.yml'.
 
-Uno de los criterios que se tiende a confundir es el término de bases de datos NoSQL con la ausencia de relaciones, pero la verdad es que muchas de las bases de datos NoSQL ya nos ofrecen funcionalidades que nos permiten tener cierto grado de relación entre los datos.
 
-# Enfoques de relaciones en MongoDB
-
-Las relaciones en MongoDB se pueden modelar en 2 enfoques diferentes: la relación incrustada o relación referenciada. La elección de estos enfoques dependerá del tipo de casuística a abordar y decisiones de modelamiento de datos.
-
-## Relación incrustada
-
-Relación que implica almacenar documentos secundarios incrustados dentro de un documento principal.
-
-![Incrustada](./img/Incrustada.png)
-
-## Relaciones referenciadas
-
-Práctica de almacenar manualmente el campo \_id de un documento relacionado como referencia en otro documento. Esto implica que el desarrollador es responsable de mantener la coherencia de las referencias y realizar las consultas necesarias para obtener los detalles completos de los documentos relacionados.
-
-![Referenciada](./img/Referenciada.png)
-
-- API REST:
-  Una API REST (Representational State Transfer) es un conjunto de reglas y convenciones para la creación de servicios web que permiten la comunicación entre sistemas. En este trabajo práctico, utilizaremos una API REST para exponer recursos y permitir operaciones CRUD (Create, Read, Update, Delete) sobre estos recursos.
-
-- Enfoque Práctico:
-  Los alumnos implementarán las relaciones ustilizando el enfoque que considen conveniente en cada caso en el contexto de una API REST utilizando un ODM específico, Mongoose. Se espera que los alumnos comprendan cómo definir modelos, establecer relaciones entre ellos y utilizar las capacidades del ODM para interactuar con la base de datos documental.
-
-- Criterios de Evaluación:
-  Se evaluará la precisión y completitud en la implementación de las asociaciones en la API REST, así como la funcionalidad completa del CRUD para los recursos expuestos por la API.
-
-## Descripción del Proyecto
-
-Han sido contratados/as por una empresa de manufactura para desarrollar un sistema interno de gestión de productos. La empresa fabrica una amplia gama de productos tecnológicos que requieren componentes específicos y son producidos por múltiples fabricantes asociados. Actualmente, el proceso de gestión de esta información es manual y está descentralizado, lo que genera demoras y problemas en la producción. La empresa busca automatizar y centralizar estos datos mediante un sistema web eficiente que permita gestionar los productos, fabricantes y componentes de manera integrada.
-
-## Modelo Documental a implementar
-
-Basandose en el siguiente diagrama de entidad-relacion (DER) utilizado para una base de datos relacional deberán deberán migrarlo a una base documental utilizando los críterios que consideren conveniente en cada caso. Relación Incrustada o Rleación Referenciada.
-
-![DER](./img/DER.png)
-
-### Descripción del modelo DER
-
-- Un **Producto** puede tener muchos fabricantes, y un **Fabricante** puede fabricar muchos productos.
-- Un **Producto** puede tener muchos componentes, y un **Componente** puede formar parte de varios productos.
-
-### Base de datos
-
-El motor de base de datos a utilizar deberá ser **Mongo DB**. Se recomeniendo utilizar el archivo docker compose incluido en este proyecto para que puedan instanciar el motor de base de datos y un cliente del mismo para consultar las colecciones de forma dockerizada.
-
-### Intalacion de dependencias
-
-Debera contar con las dependencias de produccion y desarrollo necesarias de un proyecto node. Por ejemplo:
-
-`npm i mongoose express`
-
-`npm i -D nodemon`
-
-### Tips - Conexión a un base de datos
-
-```
-const mongoose = require('mongoose')
-const MONGO_URL = process.env.MONGO_URL || 'mongodb://admin:admin1234@localhost:27017/seriesMongo?authSource=admin'
-async function connectToDatabase() {
-    try {
-        mongoose.set('strictQuery', false);
-        await mongoose.connect(MONGO_URL);
-        console.log('Conexión a mongo con éxito');
-    } catch (err) {
-        console.error('Error al conectarse a mongo', err);
-    }
-}
-
-module.exports = {connectToDatabase, mongoose}
-```
-
-- Ejemplo de como generar un modelo simple
-
-```
-const mongoose = require('./db').mongoose;
-
-const seriesSchema = new mongoose.Schema({
-    titulo: {
-        type: String,
-        required: true,
-    },
-    temporada: {
-        type: Number,
-        required: true,
-    },
-    genero: {
-        type: String,
-    },
-    capitulos: [{
-        titulo: { type: String, required: true },  // Título del capítulo
-        duracion: { type: Number },  // Duración en minutos
-        numero: { type: Number },  // Número de capítulo en la temporada
-        descripcion: { type: String }  // Breve descripción del capítulo
-    }]
-});
-
-const Series = mongoose.model('Series', seriesSchema);
-
-module.exports = Series;
-```
-
-## API
-
-Implementar la API utilizando el framework express en el entorde de ejecucion de un poryecto NodeJs. Organizar el código en rutas, controlers y middleware utilizando la separación por recurso. A continuación se detallan los endpoinds que deberán estar disponbiles en la API.
-
+## Endpoints:
 | Verbo  | Recurso                    | Status code   | Descripción                                           |
 | ------ | -------------------------- | ------------- | ----------------------------------------------------- |
 | GET    | /productos                 | 200           | Obtener todos los productos                           |
