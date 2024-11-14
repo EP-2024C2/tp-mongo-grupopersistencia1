@@ -1,5 +1,5 @@
 const { default: mongoose } = require('mongoose')
-const {Producto, Fabricante} = require('../models')
+const {Producto, Fabricante, Componente} = require('../models')
 
 const getProductos = async (req,res) => {
     try {
@@ -102,12 +102,83 @@ const asociarProductoConFabricante = async(req,res)=>{
     }
 }
 
+const getFabricantesByProducto = async (req, res) => {
+    try {
+      const productoId = req.params.id;
+      const producto = await Producto.findById(productoId);
+      if (!producto) {
+        return res.status(404).json({ error: 'Producto no encontrado' });
+      }
+  
+      const fabricantes = await Fabricante.find({ _id: { $in: producto.fabricante } });
+  
+      res.status(200).json(fabricantes);
+    } catch (error) {
+      res.status(500).json({ error: 'Error al obtener los fabricantes del producto' });
+    }
+  }
+
+const asociarProductoConComponente = async (req, res) => {
+    const idProducto = req.params.id;
+    const { idComponente } = req.body; 
+    
+    try {
+        if (!mongoose.Types.ObjectId.isValid(idComponente)) {
+            return res.status(400).json({ message: `${idComponente} no es un ObjectId válido` });
+        }
+        const componente = await Componente.findById(idComponente);
+        if (!componente) {
+            return res.status(404).json({ message: 'Componente no encontrado' });
+        }
+        const producto = await Producto.findById(idProducto);
+        if (!producto) {
+            return res.status(404).json({ message: 'Producto no encontrado' });
+        }
+        if (componente.producto.toString() === idProducto) {
+            return res.status(400).json({
+                message: `${componente.nombre} ya está asociado con el producto ${producto.nombre}`
+            });
+        }
+        const componenteActualizado = await Componente.findByIdAndUpdate(
+            idComponente,
+            { $set: { producto: idProducto } },
+            { new: true }
+        );
+        return res.status(200).json({
+            message: `Componente ${componenteActualizado.nombre} asociado con el producto ${producto.nombre}`
+        });
+
+    } catch (error) {
+        return res.status(500).json({ message: `Error al asociar componente con producto. ${error.message}` });
+    }
+};  
+
+const getComponentesByProducto = async (req, res) => {
+    try {
+      const productoId = req.params.id;
+      const producto = await Producto.findById(productoId);
+      
+      if (!producto) {
+        return res.status(404).json({ error: 'Producto no encontrado' });
+      }
+  
+      const componentes = await Componente.find({ producto: productoId });
+  
+      res.status(200).json(componentes);
+    } catch (error) {
+      res.status(500).json({ error: 'Error al obtener los componentes del producto' });
+    }
+  }
+
 module.exports = {
     getProductos,
     getProductosById,
     crearProducto,
     modificarProducto,
     borrarProducto,
-    asociarProductoConFabricante
+    asociarProductoConFabricante,
+    getFabricantesByProducto,
+    asociarProductoConComponente,
+    getComponentesByProducto
 }
 

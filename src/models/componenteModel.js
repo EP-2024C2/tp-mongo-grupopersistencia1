@@ -8,7 +8,12 @@ const componenteSchema = new Schema({
     },
     descripcion:{
         type:Schema.Types.String
-    }
+    },
+    producto: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Producto',  
+        required: true,
+      }
 })
 
 module.exports = mongoose.model('Componente', componenteSchema)

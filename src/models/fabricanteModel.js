@@ -16,7 +16,11 @@ const fabricanteSchema = new Schema({
     },
     pathImgPerfil:{
         type:Schema.Types.String
-    }
+    },
+    productos: [{
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Producto',
+      }]
 })
 
 module.exports = mongoose.model('Fabricante',fabricanteSchema)

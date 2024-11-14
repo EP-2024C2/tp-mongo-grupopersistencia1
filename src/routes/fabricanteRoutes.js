@@ -1,13 +1,12 @@
 const { Router } = require('express')
 const controllerFabricantes = require('../controllers/fabricanteControllers')
-//const {fabricanteSchema, validador} = require('../middleware') 
+const {fabricanteSchema, validador} = require('../middleware') 
 
 
 const route = Router()
 
-/*
-route.get('/',controllerFabricantes.getFabricantes)
 
+route.get('/',controllerFabricantes.getFabricantes)
 
 route.get('/:id',controllerFabricantes.getFabricantesById)
 
@@ -18,6 +17,6 @@ route.put('/:id', validador(fabricanteSchema,true),controllerFabricantes.modific
 route.delete('/:id', controllerFabricantes.borrarFabricante)
 
 route.get('/:id/productos',controllerFabricantes.getProductosByFabricante)
-*/
+
 
 module.exports=route
