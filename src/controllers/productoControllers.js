@@ -64,15 +64,6 @@ const borrarProducto = async(req,res) =>{
                 `No se pudo eliminar "${producto.nombre}" porque tiene componentes/fabricantes asociados` }) 
         }
         
-        await Componente.updateMany(
-            { _id: { $in: producto.componentes } },
-            { $pull: { productos: producto._id } }
-        )
-
-        await Fabricante.updateMany(
-            { _id: { $in: producto.fabricantes } },
-            { $pull: { productos: producto._id } }
-        )
         const productoEliminado = await Producto.findByIdAndDelete(id)
 
         if(!productoEliminado){return res.status(404).json({message:'No se encontró el producto'})}
@@ -171,7 +162,7 @@ const asociarProductoConComponente = async (req, res) => {
             { $push: {productos: idProducto} },
             { new: true }
         )
-        
+
         return res.status(200).json({
             message: `Producto ${productoActualizado.nombre} asociado con el componente ${componente.nombre}`
         })
