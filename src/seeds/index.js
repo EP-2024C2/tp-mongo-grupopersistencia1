@@ -14,7 +14,7 @@ const cleanAndSeed = async()=>{
         console.log('Todos los datos insertados')
     }
     catch(error){
-        console.log('Error al insertar datos',error.message)
+        console.log('Error al insertar datos',error.message, error)
     }
 }
 

@@ -9,11 +9,10 @@ const componenteSchema = new Schema({
     descripcion:{
         type:Schema.Types.String
     },
-    producto: {
+    productos: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Producto',  
-        required: true,
-      }
+        ref: 'Producto'
+      }]
 })
 
 module.exports = mongoose.model('Componente', componenteSchema)

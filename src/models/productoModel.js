@@ -19,6 +19,10 @@ const productoSchema = new Schema({
     fabricantes:[{
         type:Schema.Types.ObjectId,
         ref:'Fabricante'
+    }],
+    componentes:[{
+        type:Schema.Types.ObjectId,
+        ref:'Componente'
     }]
 })
 

@@ -8,9 +8,9 @@ router.get('/', controllerComponentes.getComponentes)
 
 router.get('/:id', controllerComponentes.getComponenteById)
 
-router.post('/', validador(componenteSchema), controllerComponentes.crearComponente)
+router.post('/', controllerComponentes.crearComponente)
 
-router.put('/:id',validador(componenteSchema,true), controllerComponentes.modificarComponente)
+router.put('/:id', controllerComponentes.modificarComponente)
 
 router.delete('/:id', controllerComponentes.borrarComponente)
 

@@ -11,7 +11,7 @@ const getFabricantes = async (req, res) => {
 };
 
 
-const getFabricanteById = async (req, res) => {
+const getFabricantesById = async (req, res) => {
   try {
     const fabricante = await Fabricante.findById(req.params.id);
     if (!fabricante) {
@@ -83,7 +83,7 @@ const getProductosByFabricante = async (req, res) => {
 
 module.exports={
     getFabricantes,
-    getFabricanteById,
+    getFabricantesById,
     crearFabricante,
     modificarFabricante,
     borrarFabricante,
