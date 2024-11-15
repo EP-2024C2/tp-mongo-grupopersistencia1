@@ -9,15 +9,15 @@ const router = Router()
 
 router.get('/',controllerFabricantes.getFabricantes)
 
-router.get('/:id',validarId(), controllerFabricantes.getFabricantesById)
+router.get('/:id',validarId(Fabricante), controllerFabricantes.getFabricantesById)
 
 router.post('/',validarSchema(fabricanteSchema),controllerFabricantes.crearFabricante) 
 
-router.put('/:id',validarId(),validarSchema(fabricanteSchemaUpdate),controllerFabricantes.modificarFabricante) 
+router.put('/:id',validarId(Fabricante),validarSchema(fabricanteSchemaUpdate),controllerFabricantes.modificarFabricante) 
 
-router.delete('/:id',validarId(), controllerFabricantes.borrarFabricante)
+router.delete('/:id',validarId(Fabricante), controllerFabricantes.borrarFabricante)
 
-router.get('/:id/productos',validarId(),controllerFabricantes.getProductosByFabricante)
+router.get('/:id/productos',validarId(Fabricante),controllerFabricantes.getProductosByFabricante)
 
 
 
