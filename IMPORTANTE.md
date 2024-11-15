@@ -16,6 +16,11 @@ tp_persistencia:
 *ejecutar todo: docker compose up -d
 
 
+
+# FALTA:
+  * pasar el archivo a docker
+  * subir imagen a docker hub
+  *agregar controllers de eliminar asociaciones.
 ///
 
 *para ejecutar (sin docker):

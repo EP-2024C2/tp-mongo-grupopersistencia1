@@ -23,16 +23,19 @@ const getFabricantesById = async (req, res) => {
   }
 };
 
+
 const crearFabricante = async (req, res) => {
   try {
-    const { nombre } = req.body;
-    const fabricante = new Fabricante({ nombre });
-    await fabricante.save();
-    res.status(201).json(fabricante);
+      const nuevoProducto = await Fabricante.create(req.body)
+
+      return res.status(201).json({message: 'Fabricante creado',
+          nuevoProducto
+      })
   } catch (error) {
-    res.status(400).json({ error: 'Error al crear el fabricante' });
+      console.log('Error al crear el fabricante:', error.message)
+      return res.status(500).json({message: `Error al crear el fabricante. ${error.message}`})
   }
-};
+}
 
 const modificarFabricante = async (req, res) => {
   try {
@@ -45,7 +48,7 @@ const modificarFabricante = async (req, res) => {
     if (!fabricante) {
       return res.status(404).json({ error: 'Fabricante no encontrado' });
     }
-    res.status(200).json(fabricante);
+    res.status(200).json(`Fabricante actualizado:${fabricante}`);
   } catch (error) {
     res.status(500).json({ error: 'Error al modificar el fabricante' });
   }
@@ -53,11 +56,17 @@ const modificarFabricante = async (req, res) => {
 
 
 const borrarFabricante = async (req, res) => {
+  const idFabricante = req.params.id
   try {
-    const fabricante = await Fabricante.findByIdAndDelete(req.params.id);
+    const fabricante = await Fabricante.findByIdAndDelete(idFabricante);
     if (!fabricante) {
       return res.status(404).json({ error: 'Fabricante no encontrado' });
     }
+    await Producto.updateMany(
+      { fabricantes: fabricanteId },  
+      { $pull: { fabricante: fabricanteId } }  
+    )
+    
     res.status(200).json({ message: 'Fabricante eliminado correctamente' });
   } catch (error) {
     res.status(500).json({ error: 'Error al eliminar el fabricante' });
@@ -65,21 +74,23 @@ const borrarFabricante = async (req, res) => {
 };
 
 const getProductosByFabricante = async (req, res) => {
-    try {
-      const fabricanteId = req.params.id;
-      const fabricante = await Fabricante.findById(fabricanteId);
-      
-      if (!fabricante) {
-        return res.status(404).json({ error: 'Fabricante no encontrado' });
-      }
-  
-      const productos = await Producto.find({ fabricante: fabricanteId });
-  
-      res.status(200).json(productos);
-    } catch (error) {
-      res.status(500).json({ error: 'Error al obtener los productos del fabricante' });
+  try {
+    const fabricanteId = req.params.id;
+    const fabricante = await Fabricante.findById(fabricanteId);
+    
+    if (!fabricante) {
+      return res.status(404).json({ error: 'Fabricante no encontrado' });
     }
-  };
+    
+    if(fabricante.productos.length == 0){return res.status(400).json({message:'El fabricante no tiene productos asociados.'})}
+    
+    const productosFabricante = await fabricante.populate('productos')
+    res.status(200).json(productosFabricante.productos);
+  } catch (error) {
+    res.status(500).json({ message: 'Error al obtener los productos del fabricante'});
+    console.log(error.message)
+  }
+}
 
 module.exports={
     getFabricantes,

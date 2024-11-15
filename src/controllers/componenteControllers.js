@@ -10,7 +10,7 @@ const getComponentes = async (req, res) => {
     }
 };
 
-// Obtener un componente en particular
+
 const getComponenteById = async (req, res) => {
     const { id } = req.params;
     try {
@@ -24,7 +24,7 @@ const getComponenteById = async (req, res) => {
     }
 };
 
-// Crear un nuevo componente
+
 const crearComponente = async (req, res) => {
     const { nombre, descripcion, producto } = req.body;
     try {
@@ -36,7 +36,7 @@ const crearComponente = async (req, res) => {
     }
 };
 
-// Modificar los datos de un componente
+
 const modificarComponente = async (req, res) => {
     const { id } = req.params;
     const { nombre, descripcion, producto } = req.body;
@@ -46,7 +46,7 @@ const modificarComponente = async (req, res) => {
             return res.status(404).json({ message: 'Componente no encontrado' });
         }
         
-        // Actualizamos el componente
+        
         componente.nombre = nombre || componente.nombre;
         componente.descripcion = descripcion || componente.descripcion;
         componente.producto = producto || componente.producto;
@@ -58,21 +58,26 @@ const modificarComponente = async (req, res) => {
     }
 };
 
-// Borrar un componente
+
 const borrarComponente = async (req, res) => {
-    const { id } = req.params;
+    const componenteId = req.params.id;
     try {
-        const componente = await Componente.findByIdAndDelete(id);
+        const componente = await Componente.findByIdAndDelete(componenteId);
         if (!componente) {
             return res.status(404).json({ message: 'Componente no encontrado' });
         }
+        await Producto.updateMany(
+            { componentes: componenteId },  
+            { $pull: { componentes: componenteId } }  
+          )
+          
         res.status(200).json({ message: `Componente ${componente.nombre} eliminado correctamente` });
     } catch (error) {
         res.status(500).json({ message: `Error al eliminar el componente: ${error.message}` });
     }
 };
 
-// Obtener todos los productos asociados a un componente
+
 const getProductosByComponente = async (req, res) => {
     const { id } = req.params;
     try {
@@ -88,7 +93,7 @@ const getProductosByComponente = async (req, res) => {
     }
 };
 
-// Exportar funciones
+
 module.exports = {
     getComponentes,
     getComponenteById,

@@ -1,19 +1,21 @@
 const { Router } = require('express')
 const controllerComponentes = require('../controllers/componenteControllers')
-const { componenteSchema, validador } = require('../middleware/') 
+const { componenteSchema, componenteSchemaUpdate } = require('../schemas/componenteSchema') 
+const {Componente} = require('../models')
+const {validarSchema,validarId} = require('../middleware')
 
 const router = Router()
 
 router.get('/', controllerComponentes.getComponentes)
 
-router.get('/:id', controllerComponentes.getComponenteById)
+router.get('/:id',validarId(Componente),controllerComponentes.getComponenteById)
 
-router.post('/', controllerComponentes.crearComponente)
+router.post('/', validarSchema(componenteSchema),controllerComponentes.crearComponente)
 
-router.put('/:id', controllerComponentes.modificarComponente)
+router.put('/:id',validarId(Componente),validarSchema(componenteSchemaUpdate), controllerComponentes.modificarComponente)
 
-router.delete('/:id', controllerComponentes.borrarComponente)
+router.delete('/:id',validarId(Componente), controllerComponentes.borrarComponente)
 
-router.get('/:id/productos', controllerComponentes.getProductosByComponente)
+router.get('/:id/productos',validarId(Componente), controllerComponentes.getProductosByComponente)
 
 module.exports = router

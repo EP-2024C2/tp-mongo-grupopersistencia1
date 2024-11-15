@@ -15,8 +15,7 @@ const productoSchema = Joi.object().keys({
     }),
     descripcion: Joi.string().max(120).messages({
         "string.max": `'descripcion' debe tener como máximo {#limit} caracteres`,
-        "string.base":"'descripcion' debe ser una cadena de texto",
-        "string.empty":"'descripcion' no puede estar vacio",
+        "string.base":"'descripcion' debe ser una cadena de texto"
     }),
     precio: Joi.number().required().messages({
         "number.base": "'precio' debe ser un numero",

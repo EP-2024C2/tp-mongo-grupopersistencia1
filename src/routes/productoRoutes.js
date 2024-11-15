@@ -2,31 +2,30 @@ const { Router } = require('express')
 const controllerProductos = require('../controllers/productoControllers')
 const {validarSchema,validarId} = require('../middleware')
 const {productoSchema, productoSchemaUpdate} = require('../schemas/productoSchema')
-const { producto } = require('../models')
+const { Producto } = require('../models')
 
 
-const route = Router()
+const router = Router()
 
-route.get('/', controllerProductos.getProductos ) 
+router.get('/', controllerProductos.getProductos ) 
 
-route.get('/:id', validarId(producto),controllerProductos.getProductosById ) 
+router.get('/:id', validarId(Producto),controllerProductos.getProductosById ) 
 
-route.post('/', validarSchema(productoSchema),controllerProductos.crearProducto) 
+router.post('/', validarSchema(productoSchema),controllerProductos.crearProducto) 
 
-route.put('/:id', validarId(producto),validarSchema(productoSchemaUpdate),controllerProductos.modificarProducto) 
+router.put('/:id', validarId(Producto),validarSchema(productoSchemaUpdate),controllerProductos.modificarProducto) 
 
-route.delete('/:id', validarId(producto), controllerProductos.borrarProducto) 
+router.delete('/:id', validarId(Producto), controllerProductos.borrarProducto) 
 //CORREGIR QUE NO SE PUEDA ELIMINAR SI ESTÁ ASOCIADO
 //Lo mismo con los fabricantes y componentes 
 
-route.post('/:id/fabricantes',validarId(producto), controllerProductos.asociarProductoConFabricante) 
+router.post('/:id/fabricantes',validarId(Producto), controllerProductos.asociarProductoConFabricante) 
 
-route.get('/:id/fabricantes',validarId(producto), controllerProductos.getFabricantesByProducto) 
+router.get('/:id/fabricantes',validarId(Producto), controllerProductos.getFabricantesByProducto) 
 
-route.post('/:id/componentes',validarId(producto),controllerProductos.asociarProductoConComponente) //asociar un producto con 1 o n componentes
+router.post('/:id/componentes',validarId(Producto),controllerProductos.asociarProductoConComponente) 
 
-route.get('/:id/componentes',validarId(producto), controllerProductos.getComponentesByProducto) 
+router.get('/:id/componentes',validarId(Producto), controllerProductos.getComponentesByProducto) 
 
 
-
-module.exports = route
+module.exports = router
