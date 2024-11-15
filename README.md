@@ -44,7 +44,13 @@ Agregamos dos endpoints adicionales, para adicionar la posibilidad de desasociar
 | PUT    | /productos/:id/componentesDelete | 200,400,404,500  | Elimina la asociacion de un componente con el producto. | el cuerpo de la solicitud debe ser un JSON con un campo "idComponente"
 | PUT    | /productos/:id/fabricantesDelete | 200,400,404,500  | Elimina la asociacion de un fabricante con el producto. | el cuerpo de la solicitud debe ser un JSON con un campo "idFabricante"
 
-# Aclaracion:
+# Aclaraciones:
    * Las variables de entorno se declaran en docker-compose.yml
+   * Un Producto puede tener muchos fabricantes, y un Fabricante puede fabricar muchos productos.
+   * Un Producto puede tener muchos componentes, y un Componente puede formar parte de varios productos.
+     
+![DER](img/DER.png)
+
+(En la imagen se muestran relaciones de 1 a N por limitaciones del software con el que realizamos los diagramas)
 
 
