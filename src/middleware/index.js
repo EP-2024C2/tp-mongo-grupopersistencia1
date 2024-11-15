@@ -12,7 +12,7 @@ const validarSchema = (schema) => {
     };
 };
 
-const validarId = (model) =>{  //Solo comprueba si el id es un objectid valido. La lógica de los errores está en los controladores
+const validarId = () =>{  //Solo comprueba si el id es un objectid valido. La lógica de los errores está en los controladores
     return async(req,res,next) =>{
         const id = req.params.id
         if (!mongoose.Types.ObjectId.isValid(id)) {

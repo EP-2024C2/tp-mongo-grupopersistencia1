@@ -62,16 +62,17 @@ const borrarFabricante = async (req, res) => {
     if (!fabricante) {
       return res.status(404).json({ error: 'Fabricante no encontrado' });
     }
-    await Producto.updateMany(
-      { fabricantes: fabricanteId },  
-      { $pull: { fabricante: fabricanteId } }  
-    )
-    
+
+    if(fabricante.productos.length > 0){
+      return res.status(400).json({message:`No se pudo eliminar '${fabricante.nombre}' porque tiene productos asociados.`})
+    }
+
     res.status(200).json({ message: 'Fabricante eliminado correctamente' });
   } catch (error) {
     res.status(500).json({ error: 'Error al eliminar el fabricante' });
   }
-};
+}
+
 
 const getProductosByFabricante = async (req, res) => {
   try {

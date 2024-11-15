@@ -1,4 +1,16 @@
 services:
+
+  tp_persistencia:
+    image: tp_persistencia  
+    ports:
+      - "3000:3000" 
+    environment:
+      PORT : 3000
+      DB_URL: mongodb://admin:admin1234@mongodb:27017
+    depends_on:
+      - mongodb
+
+      
   mongodb:
     image: mongo:latest
     environment:

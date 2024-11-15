@@ -66,11 +66,11 @@ const borrarComponente = async (req, res) => {
         if (!componente) {
             return res.status(404).json({ message: 'Componente no encontrado' });
         }
-        await Producto.updateMany(
-            { componentes: componenteId },  
-            { $pull: { componentes: componenteId } }  
-          )
-          
+
+        if(componente.productos.length > 0){
+            return res.status(400).json({message:`No se pudo eliminar '${componente.nombre}' porque tiene productos asociados.`})
+          }
+     
         res.status(200).json({ message: `Componente ${componente.nombre} eliminado correctamente` });
     } catch (error) {
         res.status(500).json({ message: `Error al eliminar el componente: ${error.message}` });

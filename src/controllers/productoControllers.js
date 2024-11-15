@@ -1,5 +1,6 @@
 const { default: mongoose } = require('mongoose')
 const {Producto, Fabricante, Componente} = require('../models')
+const { getComponenteById } = require('./componenteControllers')
 
 const getProductos = async (req,res) => {
     try {
@@ -191,6 +192,65 @@ const getComponentesByProducto = async (req, res) => {
     }
   }
 
+const desasociarComponente = async(req,res) =>{
+    const {idComponente} = req.body
+    const idProducto = req.params.id
+    try {
+        const producto = await Producto.findById(idProducto)
+        const componente = await Componente.findById(idComponente)
+
+        if(!producto){return res.status(404).json({message:'Producto no encontrado'})}
+        if(!componente){return res.status(404).json({message:'Componente no encontrado'})}
+
+        if(!producto.componentes.includes(idComponente)){
+            return res.status(400).json({message:`El componente '${componente.nombre}' no está asociado con '${producto.nombre}'`})
+        }
+        await Producto.updateOne(
+            {_id:idProducto},
+            {$pull:{componentes:idComponente}}
+        )
+
+        await Componente.updateOne(
+            {_id:idComponente},
+            {$pull:{productos:idProducto}}
+        )
+        return res.status(200).json({message:'Componente desasociado con exito'})
+
+    } catch (error) {
+        return res.status(500).json({message:`Error al desasociar componente:${error.message}`})
+    }
+}
+
+const desasociarFabricante = async(req,res) =>{
+    const {idFabricante} = req.body
+    const idProducto = req.params.id
+    try {
+        const producto = await Producto.findById(idProducto)
+        const fabricante = await Fabricante.findById(idFabricante)
+
+        if(!producto){return res.status(404).json({message:'Producto no encontrado'})}
+        if(!fabricante){return res.status(404).json({message:'Fabricante no encontrado'})}
+
+        if(!producto.fabricantes.includes(idFabricante)){
+            return res.status(400).json({message:`El componente '${fabricante.nombre}' no está asociado con '${producto.nombre}'`})
+        }
+        await Producto.updateOne(
+            {_id:idProducto},
+            {$pull:{fabricantes:idFabricante}}
+        )
+        
+        await Fabricante.updateOne(
+            {_id:idFabricante},
+            {$pull:{productos:idProducto}}
+        )
+        return res.status(200).json({message:'Fabricante desasociado con exito'})
+
+    } catch (error) {
+        return res.status(500).json({message:`Error al desasociar fabricante:${error.message}`})
+    }
+}
+
+
 module.exports = {
     getProductos,
     getProductosById,
@@ -200,6 +260,8 @@ module.exports = {
     asociarProductoConFabricante,
     getFabricantesByProducto,
     asociarProductoConComponente,
-    getComponentesByProducto
+    getComponentesByProducto,
+    desasociarComponente,
+    desasociarFabricante
 }
 

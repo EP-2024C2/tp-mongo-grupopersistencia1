@@ -8,14 +8,14 @@ const router = Router()
 
 router.get('/', controllerComponentes.getComponentes)
 
-router.get('/:id',validarId(Componente),controllerComponentes.getComponenteById)
+router.get('/:id',validarId(),controllerComponentes.getComponenteById)
 
 router.post('/', validarSchema(componenteSchema),controllerComponentes.crearComponente)
 
-router.put('/:id',validarId(Componente),validarSchema(componenteSchemaUpdate), controllerComponentes.modificarComponente)
+router.put('/:id',validarId(),validarSchema(componenteSchemaUpdate), controllerComponentes.modificarComponente)
 
-router.delete('/:id',validarId(Componente), controllerComponentes.borrarComponente)
+router.delete('/:id',validarId(), controllerComponentes.borrarComponente)
 
-router.get('/:id/productos',validarId(Componente), controllerComponentes.getProductosByComponente)
+router.get('/:id/productos',validarId(), controllerComponentes.getProductosByComponente)
 
 module.exports = router
