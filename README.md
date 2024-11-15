@@ -2,13 +2,13 @@
 # Estrategias de Persistencia - TP 2 2024 - Documental
 
 ## Instrucciones para correr la app:
-Posicionarse en el directorio donde se encuentra la aplicacion y ejecutar el siguientes comandos:
+Posicionarse en el directorio donde se encuentra la aplicacion y ejecutar el siguiente comando:
 
-## 'docker compose up -d' 
+**'docker compose up -d'**
 
 Esto ejecuta la aplicación y la base de datos desde el archivo 'docker-compose.yml'.
 
-## Importante: tener instalado Docker.
+**Importante: tener instalado Docker.**
 
    
 ## Endpoints:
