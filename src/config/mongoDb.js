@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
-const MONGO_URL = process.env.DB_URL || 'mongodb://admin:admin1234@mongodb:27017/'  
-
+//const MONGO_URL = process.env.DB_URL || 'mongodb://admin:admin1234@mongodb:27017/'  
+const MONGO_URL = 'mongodb://admin:admin1234@localhost:27017/'  
 
 const connectToDatabase = async () =>{
     try{

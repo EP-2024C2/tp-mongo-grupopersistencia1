@@ -25,8 +25,8 @@ router.post('/:id/componentes',validarId(),controllerProductos.asociarProductoCo
 
 router.get('/:id/componentes',validarId(), controllerProductos.getComponentesByProducto) 
 
-router.put('/:id/componentesDelete', validarId(), controllerProductos.desasociarComponente)
+router.patch('/:id/componentesDelete', validarId(), controllerProductos.desasociarComponente)
 
-router.put('/:id/fabricantesDelete', validarId(), controllerProductos.desasociarFabricante)
+router.patch('/:id/fabricantesDelete', validarId(), controllerProductos.desasociarFabricante)
 
 module.exports = router

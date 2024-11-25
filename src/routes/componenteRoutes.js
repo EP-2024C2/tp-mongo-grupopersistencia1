@@ -13,6 +13,7 @@ router.get('/:id',validarId(),controllerComponentes.getComponenteById)
 router.post('/', validarSchema(componenteSchema),controllerComponentes.crearComponente)
 
 router.put('/:id',validarId(),validarSchema(componenteSchemaUpdate), controllerComponentes.modificarComponente)
+//UPD; deberia ser patch
 
 router.delete('/:id',validarId(), controllerComponentes.borrarComponente)
 

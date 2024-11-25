@@ -2,7 +2,8 @@ const express = require('express')
 const {connectToDatabase} = require('./config/mongoDb')
 const cleanAndSeed = require('./seeds')
 const router = require('./routes')
-const PORT = process.env.PORT || 3000  
+require('dotenv').config()
+const PORT = process.env.PORT || 3001
 const mongoose = require('mongoose')
 
 const app = express()
